@@ -1,0 +1,151 @@
+Name: Pramod Dhungana
+Simulation Project 2 Extra Credit - Network of Queues
+Departure goal: 10000 completed customers
+Customer pool size: 100
+External arrival rate lambda0 = 8.000000
+Central server rate = 10.000000
+Sleep/vacation ending rate lambda2 = 5.000000
+Server rates: S1=14, S2=15, S3=20, S4=20, S5=20
+Server states: B=Busy, I=Idle, V=Vacation
+Vacation wake-up events in the FEL are marked with [RED]
+
+============================================================
+System 1: central sends to one awake server; downstream queues allowed
+If multiple servers are awake, customer goes to the awake server with smallest load.
+n = 3
+Trace for first 20 events
+No | clock | event | action | current state after event | FEL preview
+------------------------------------------------------------
+ 1 | clock=  0.0375 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I(Q0) S2=I(Q0) S3=I(Q0) | pool=1/100 | departures=0 | FEL: CENTRAL_DONE@0.043 ARRIVAL@0.245
+ 2 | clock=  0.0430 | CENTRAL_DONE | central sent customer to awake server S1 | customer 0 | CQ=0 C=IDLE | Status: S1=B(Q0) S2=I(Q0) S3=I(Q0) | pool=1/100 | departures=0 | FEL: SERVER_DONE@0.204(S1) ARRIVAL@0.245
+ 3 | clock=  0.2041 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=V(Q0) S2=I(Q0) S3=I(Q0) | pool=0/100 | departures=1 | FEL: ARRIVAL@0.245 WAKE@0.335(S1)[RED]
+ 4 | clock=  0.2447 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=V(Q0) S2=I(Q0) S3=I(Q0) | pool=1/100 | departures=1 | FEL: CENTRAL_DONE@0.253 ARRIVAL@0.256 WAKE@0.335(S1)[RED]
+ 5 | clock=  0.2532 | CENTRAL_DONE | central sent customer to awake server S2 | customer 1 | CQ=0 C=IDLE | Status: S1=V(Q0) S2=B(Q0) S3=I(Q0) | pool=1/100 | departures=1 | FEL: ARRIVAL@0.256 WAKE@0.335(S1)[RED] SERVER_DONE@0.396(S2)
+ 6 | clock=  0.2563 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=V(Q0) S2=B(Q0) S3=I(Q0) | pool=2/100 | departures=1 | FEL: ARRIVAL@0.316 WAKE@0.335(S1)[RED] CENTRAL_DONE@0.371 SERVER_DONE@0.396(S2)
+ 7 | clock=  0.3158 |      ARRIVAL | customer joined central queue | CQ=1 C=BUSY | Status: S1=V(Q0) S2=B(Q0) S3=I(Q0) | pool=3/100 | departures=1 | FEL: WAKE@0.335(S1)[RED] ARRIVAL@0.370 CENTRAL_DONE@0.371 SERVER_DONE@0.396(S2)
+ 8 | clock=  0.3353 |         WAKE | S1 vacation ended and server is idle | CQ=1 C=BUSY | Status: S1=I(Q0) S2=B(Q0) S3=I(Q0) | pool=3/100 | departures=1 | FEL: ARRIVAL@0.370 CENTRAL_DONE@0.371 SERVER_DONE@0.396(S2)
+ 9 | clock=  0.3697 |      ARRIVAL | customer joined central queue | CQ=2 C=BUSY | Status: S1=I(Q0) S2=B(Q0) S3=I(Q0) | pool=4/100 | departures=1 | FEL: CENTRAL_DONE@0.371 SERVER_DONE@0.396(S2) ARRIVAL@0.479
+10 | clock=  0.3708 | CENTRAL_DONE | central sent customer to awake server S1 | customer 2 | CQ=1 C=BUSY | Status: S1=B(Q0) S2=B(Q0) S3=I(Q0) | pool=4/100 | departures=1 | FEL: SERVER_DONE@0.377(S1) SERVER_DONE@0.396(S2) ARRIVAL@0.479 CENTRAL_DONE@0.585
+11 | clock=  0.3768 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=1 C=BUSY | Status: S1=V(Q0) S2=B(Q0) S3=I(Q0) | pool=3/100 | departures=2 | FEL: SERVER_DONE@0.396(S2) ARRIVAL@0.479 CENTRAL_DONE@0.585 WAKE@0.587(S1)[RED]
+12 | clock=  0.3965 |  SERVER_DONE | S2 completed customer and went on vacation | CQ=1 C=BUSY | Status: S1=V(Q0) S2=V(Q0) S3=I(Q0) | pool=2/100 | departures=3 | FEL: ARRIVAL@0.479 CENTRAL_DONE@0.585 WAKE@0.587(S1)[RED] WAKE@0.918(S2)[RED]
+13 | clock=  0.4793 |      ARRIVAL | customer joined central queue | CQ=2 C=BUSY | Status: S1=V(Q0) S2=V(Q0) S3=I(Q0) | pool=3/100 | departures=3 | FEL: ARRIVAL@0.521 CENTRAL_DONE@0.585 WAKE@0.587(S1)[RED] WAKE@0.918(S2)[RED]
+14 | clock=  0.5212 |      ARRIVAL | customer joined central queue | CQ=3 C=BUSY | Status: S1=V(Q0) S2=V(Q0) S3=I(Q0) | pool=4/100 | departures=3 | FEL: CENTRAL_DONE@0.585 WAKE@0.587(S1)[RED] WAKE@0.918(S2)[RED] ARRIVAL@1.003
+15 | clock=  0.5854 | CENTRAL_DONE | central sent customer to awake server S3 | customer 3 | CQ=2 C=BUSY | Status: S1=V(Q0) S2=V(Q0) S3=B(Q0) | pool=4/100 | departures=3 | FEL: WAKE@0.587(S1)[RED] SERVER_DONE@0.596(S3) CENTRAL_DONE@0.727 WAKE@0.918(S2)[RED] ARRIVAL@1.003
+16 | clock=  0.5869 |         WAKE | S1 vacation ended and server is idle | CQ=2 C=BUSY | Status: S1=I(Q0) S2=V(Q0) S3=B(Q0) | pool=4/100 | departures=3 | FEL: SERVER_DONE@0.596(S3) CENTRAL_DONE@0.727 WAKE@0.918(S2)[RED] ARRIVAL@1.003
+17 | clock=  0.5959 |  SERVER_DONE | S3 completed customer and went on vacation | CQ=2 C=BUSY | Status: S1=I(Q0) S2=V(Q0) S3=V(Q0) | pool=3/100 | departures=4 | FEL: WAKE@0.656(S3)[RED] CENTRAL_DONE@0.727 WAKE@0.918(S2)[RED] ARRIVAL@1.003
+18 | clock=  0.6564 |         WAKE | S3 vacation ended and server is idle | CQ=2 C=BUSY | Status: S1=I(Q0) S2=V(Q0) S3=I(Q0) | pool=3/100 | departures=4 | FEL: CENTRAL_DONE@0.727 WAKE@0.918(S2)[RED] ARRIVAL@1.003
+19 | clock=  0.7273 | CENTRAL_DONE | central sent customer to awake server S1 | customer 4 | CQ=1 C=BUSY | Status: S1=B(Q0) S2=V(Q0) S3=I(Q0) | pool=3/100 | departures=4 | FEL: SERVER_DONE@0.766(S1) WAKE@0.918(S2)[RED] ARRIVAL@1.003 CENTRAL_DONE@1.045
+20 | clock=  0.7656 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=1 C=BUSY | Status: S1=V(Q0) S2=V(Q0) S3=I(Q0) | pool=2/100 | departures=5 | FEL: WAKE@0.857(S1)[RED] WAKE@0.918(S2)[RED] ARRIVAL@1.003 CENTRAL_DONE@1.045
+------------------------------------------------------------
+Completed departures: 10000
+Average time in system: 0.740
+Variance of time in system: 0.447
+Maximum pool objects used: 40/100
+Pool exhaustions: 0
+
+============================================================
+System 2: central sends only to an awake idle/free server
+If no free server exists, central blocks and new arrivals disappear.
+n = 3
+Trace for first 20 events
+No | clock | event | action | current state after event | FEL preview
+------------------------------------------------------------
+ 1 | clock=  0.1375 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I S2=I S3=I | pool=1/100 | departures=0 | FEL: CENTRAL_DONE@0.146 ARRIVAL@0.295
+ 2 | clock=  0.1458 | CENTRAL_DONE | central sent customer to free server S1 | customer 0 | CQ=0 C=IDLE | Status: S1=B S2=I S3=I | pool=1/100 | departures=0 | FEL: ARRIVAL@0.295 SERVER_DONE@0.402(S1)
+ 3 | clock=  0.2948 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=B S2=I S3=I | pool=2/100 | departures=0 | FEL: SERVER_DONE@0.402(S1) CENTRAL_DONE@0.411 ARRIVAL@0.540
+ 4 | clock=  0.4021 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=0 C=BUSY | Status: S1=V S2=I S3=I | pool=1/100 | departures=1 | FEL: CENTRAL_DONE@0.411 WAKE@0.445(S1)[RED] ARRIVAL@0.540
+ 5 | clock=  0.4115 | CENTRAL_DONE | central sent customer to free server S2 | customer 1 | CQ=0 C=IDLE | Status: S1=V S2=B S3=I | pool=1/100 | departures=1 | FEL: WAKE@0.445(S1)[RED] SERVER_DONE@0.462(S2) ARRIVAL@0.540
+ 6 | clock=  0.4454 |         WAKE | S1 vacation ended and server is idle | CQ=0 C=IDLE | Status: S1=I S2=B S3=I | pool=1/100 | departures=1 | FEL: SERVER_DONE@0.462(S2) ARRIVAL@0.540
+ 7 | clock=  0.4625 |  SERVER_DONE | S2 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=I S2=V S3=I | pool=0/100 | departures=2 | FEL: ARRIVAL@0.540 WAKE@0.759(S2)[RED]
+ 8 | clock=  0.5395 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I S2=V S3=I | pool=1/100 | departures=2 | FEL: CENTRAL_DONE@0.615 WAKE@0.759(S2)[RED] ARRIVAL@0.817
+ 9 | clock=  0.6153 | CENTRAL_DONE | central sent customer to free server S1 | customer 2 | CQ=0 C=IDLE | Status: S1=B S2=V S3=I | pool=1/100 | departures=2 | FEL: SERVER_DONE@0.686(S1) WAKE@0.759(S2)[RED] ARRIVAL@0.817
+10 | clock=  0.6857 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=V S2=V S3=I | pool=0/100 | departures=3 | FEL: WAKE@0.701(S1)[RED] WAKE@0.759(S2)[RED] ARRIVAL@0.817
+11 | clock=  0.7011 |         WAKE | S1 vacation ended and server is idle | CQ=0 C=IDLE | Status: S1=I S2=V S3=I | pool=0/100 | departures=3 | FEL: WAKE@0.759(S2)[RED] ARRIVAL@0.817
+12 | clock=  0.7592 |         WAKE | S2 vacation ended and server is idle | CQ=0 C=IDLE | Status: S1=I S2=I S3=I | pool=0/100 | departures=3 | FEL: ARRIVAL@0.817
+13 | clock=  0.8165 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I S2=I S3=I | pool=1/100 | departures=3 | FEL: CENTRAL_DONE@0.818 ARRIVAL@1.074
+14 | clock=  0.8178 | CENTRAL_DONE | central sent customer to free server S1 | customer 3 | CQ=0 C=IDLE | Status: S1=B S2=I S3=I | pool=1/100 | departures=3 | FEL: SERVER_DONE@0.864(S1) ARRIVAL@1.074
+15 | clock=  0.8643 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=V S2=I S3=I | pool=0/100 | departures=4 | FEL: WAKE@0.979(S1)[RED] ARRIVAL@1.074
+16 | clock=  0.9787 |         WAKE | S1 vacation ended and server is idle | CQ=0 C=IDLE | Status: S1=I S2=I S3=I | pool=0/100 | departures=4 | FEL: ARRIVAL@1.074
+17 | clock=  1.0743 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I S2=I S3=I | pool=1/100 | departures=4 | FEL: CENTRAL_DONE@1.103 ARRIVAL@1.204
+18 | clock=  1.1031 | CENTRAL_DONE | central sent customer to free server S1 | customer 4 | CQ=0 C=IDLE | Status: S1=B S2=I S3=I | pool=1/100 | departures=4 | FEL: SERVER_DONE@1.106(S1) ARRIVAL@1.204
+19 | clock=  1.1060 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=V S2=I S3=I | pool=0/100 | departures=5 | FEL: ARRIVAL@1.204 WAKE@1.456(S1)[RED]
+20 | clock=  1.2038 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=V S2=I S3=I | pool=1/100 | departures=5 | FEL: ARRIVAL@1.248 CENTRAL_DONE@1.271 WAKE@1.456(S1)[RED]
+------------------------------------------------------------
+Completed departures: 10000
+Lost/disappeared arrivals: 1500
+Average time in system: 0.578
+Variance of time in system: 0.215
+Maximum pool objects used: 21/100
+Pool exhaustions: 0
+
+============================================================
+System 1: central sends to one awake server; downstream queues allowed
+If multiple servers are awake, customer goes to the awake server with smallest load.
+n = 5
+Trace for first 20 events
+No | clock | event | action | current state after event | FEL preview
+------------------------------------------------------------
+ 1 | clock=  0.0497 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=0 | FEL: CENTRAL_DONE@0.155 ARRIVAL@0.287
+ 2 | clock=  0.1546 | CENTRAL_DONE | central sent customer to awake server S1 | customer 0 | CQ=0 C=IDLE | Status: S1=B(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=0 | FEL: ARRIVAL@0.287 SERVER_DONE@0.332(S1)
+ 3 | clock=  0.2871 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=B(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=2/100 | departures=0 | FEL: CENTRAL_DONE@0.330 SERVER_DONE@0.332(S1) ARRIVAL@0.453
+ 4 | clock=  0.3300 | CENTRAL_DONE | central sent customer to awake server S2 | customer 1 | CQ=0 C=IDLE | Status: S1=B(Q0) S2=B(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=2/100 | departures=0 | FEL: SERVER_DONE@0.332(S1) SERVER_DONE@0.420(S2) ARRIVAL@0.453
+ 5 | clock=  0.3315 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=V(Q0) S2=B(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=1 | FEL: SERVER_DONE@0.420(S2) ARRIVAL@0.453 WAKE@0.507(S1)[RED]
+ 6 | clock=  0.4201 |  SERVER_DONE | S2 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=V(Q0) S2=V(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=0/100 | departures=2 | FEL: ARRIVAL@0.453 WAKE@0.507(S1)[RED] WAKE@0.531(S2)[RED]
+ 7 | clock=  0.4528 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=V(Q0) S2=V(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=2 | FEL: CENTRAL_DONE@0.456 WAKE@0.507(S1)[RED] WAKE@0.531(S2)[RED] ARRIVAL@0.928
+ 8 | clock=  0.4555 | CENTRAL_DONE | central sent customer to awake server S3 | customer 2 | CQ=0 C=IDLE | Status: S1=V(Q0) S2=V(Q0) S3=B(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=2 | FEL: WAKE@0.507(S1)[RED] WAKE@0.531(S2)[RED] SERVER_DONE@0.630(S3) ARRIVAL@0.928
+ 9 | clock=  0.5074 |         WAKE | S1 vacation ended and server is idle | CQ=0 C=IDLE | Status: S1=I(Q0) S2=V(Q0) S3=B(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=2 | FEL: WAKE@0.531(S2)[RED] SERVER_DONE@0.630(S3) ARRIVAL@0.928
+10 | clock=  0.5309 |         WAKE | S2 vacation ended and server is idle | CQ=0 C=IDLE | Status: S1=I(Q0) S2=I(Q0) S3=B(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=2 | FEL: SERVER_DONE@0.630(S3) ARRIVAL@0.928
+11 | clock=  0.6299 |  SERVER_DONE | S3 completed customer and went on vacation | CQ=0 C=IDLE | Status: S1=I(Q0) S2=I(Q0) S3=V(Q0) S4=I(Q0) S5=I(Q0) | pool=0/100 | departures=3 | FEL: ARRIVAL@0.928 WAKE@1.136(S3)[RED]
+12 | clock=  0.9282 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I(Q0) S2=I(Q0) S3=V(Q0) S4=I(Q0) S5=I(Q0) | pool=1/100 | departures=3 | FEL: ARRIVAL@1.012 WAKE@1.136(S3)[RED] CENTRAL_DONE@1.167
+13 | clock=  1.0120 |      ARRIVAL | customer joined central queue | CQ=1 C=BUSY | Status: S1=I(Q0) S2=I(Q0) S3=V(Q0) S4=I(Q0) S5=I(Q0) | pool=2/100 | departures=3 | FEL: ARRIVAL@1.024 WAKE@1.136(S3)[RED] CENTRAL_DONE@1.167
+14 | clock=  1.0236 |      ARRIVAL | customer joined central queue | CQ=2 C=BUSY | Status: S1=I(Q0) S2=I(Q0) S3=V(Q0) S4=I(Q0) S5=I(Q0) | pool=3/100 | departures=3 | FEL: ARRIVAL@1.066 WAKE@1.136(S3)[RED] CENTRAL_DONE@1.167
+15 | clock=  1.0664 |      ARRIVAL | customer joined central queue | CQ=3 C=BUSY | Status: S1=I(Q0) S2=I(Q0) S3=V(Q0) S4=I(Q0) S5=I(Q0) | pool=4/100 | departures=3 | FEL: WAKE@1.136(S3)[RED] CENTRAL_DONE@1.167 ARRIVAL@1.176
+16 | clock=  1.1360 |         WAKE | S3 vacation ended and server is idle | CQ=3 C=BUSY | Status: S1=I(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=4/100 | departures=3 | FEL: CENTRAL_DONE@1.167 ARRIVAL@1.176
+17 | clock=  1.1666 | CENTRAL_DONE | central sent customer to awake server S1 | customer 3 | CQ=2 C=BUSY | Status: S1=B(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=4/100 | departures=3 | FEL: ARRIVAL@1.176 SERVER_DONE@1.225(S1) CENTRAL_DONE@1.494
+18 | clock=  1.1756 |      ARRIVAL | customer joined central queue | CQ=3 C=BUSY | Status: S1=B(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=5/100 | departures=3 | FEL: ARRIVAL@1.205 SERVER_DONE@1.225(S1) CENTRAL_DONE@1.494
+19 | clock=  1.2047 |      ARRIVAL | customer joined central queue | CQ=4 C=BUSY | Status: S1=B(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=6/100 | departures=3 | FEL: SERVER_DONE@1.225(S1) ARRIVAL@1.310 CENTRAL_DONE@1.494
+20 | clock=  1.2250 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=4 C=BUSY | Status: S1=V(Q0) S2=I(Q0) S3=I(Q0) S4=I(Q0) S5=I(Q0) | pool=5/100 | departures=4 | FEL: ARRIVAL@1.310 CENTRAL_DONE@1.494 WAKE@1.505(S1)[RED]
+------------------------------------------------------------
+Completed departures: 10000
+Average time in system: 0.557
+Variance of time in system: 0.191
+Maximum pool objects used: 31/100
+Pool exhaustions: 0
+
+============================================================
+System 2: central sends only to an awake idle/free server
+If no free server exists, central blocks and new arrivals disappear.
+n = 5
+Trace for first 20 events
+No | clock | event | action | current state after event | FEL preview
+------------------------------------------------------------
+ 1 | clock=  0.0215 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=I S2=I S3=I S4=I S5=I | pool=1/100 | departures=0 | FEL: CENTRAL_DONE@0.035 ARRIVAL@0.068
+ 2 | clock=  0.0348 | CENTRAL_DONE | central sent customer to free server S1 | customer 0 | CQ=0 C=IDLE | Status: S1=B S2=I S3=I S4=I S5=I | pool=1/100 | departures=0 | FEL: ARRIVAL@0.068 SERVER_DONE@0.271(S1)
+ 3 | clock=  0.0684 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=B S2=I S3=I S4=I S5=I | pool=2/100 | departures=0 | FEL: ARRIVAL@0.172 CENTRAL_DONE@0.205 SERVER_DONE@0.271(S1)
+ 4 | clock=  0.1720 |      ARRIVAL | customer joined central queue | CQ=1 C=BUSY | Status: S1=B S2=I S3=I S4=I S5=I | pool=3/100 | departures=0 | FEL: CENTRAL_DONE@0.205 ARRIVAL@0.243 SERVER_DONE@0.271(S1)
+ 5 | clock=  0.2050 | CENTRAL_DONE | central sent customer to free server S2 | customer 1 | CQ=0 C=BUSY | Status: S1=B S2=B S3=I S4=I S5=I | pool=3/100 | departures=0 | FEL: CENTRAL_DONE@0.241 ARRIVAL@0.243 SERVER_DONE@0.271(S1) SERVER_DONE@0.288(S2)
+ 6 | clock=  0.2405 | CENTRAL_DONE | central sent customer to free server S3 | customer 2 | CQ=0 C=IDLE | Status: S1=B S2=B S3=B S4=I S5=I | pool=3/100 | departures=0 | FEL: ARRIVAL@0.243 SERVER_DONE@0.265(S3) SERVER_DONE@0.271(S1) SERVER_DONE@0.288(S2)
+ 7 | clock=  0.2432 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=B S2=B S3=B S4=I S5=I | pool=4/100 | departures=0 | FEL: SERVER_DONE@0.265(S3) SERVER_DONE@0.271(S1) SERVER_DONE@0.288(S2) CENTRAL_DONE@0.297 ARRIVAL@0.350
+ 8 | clock=  0.2652 |  SERVER_DONE | S3 completed customer and went on vacation | CQ=0 C=BUSY | Status: S1=B S2=B S3=V S4=I S5=I | pool=3/100 | departures=1 | FEL: SERVER_DONE@0.271(S1) SERVER_DONE@0.288(S2) CENTRAL_DONE@0.297 ARRIVAL@0.350 WAKE@0.476(S3)[RED]
+ 9 | clock=  0.2710 |  SERVER_DONE | S1 completed customer and went on vacation | CQ=0 C=BUSY | Status: S1=V S2=B S3=V S4=I S5=I | pool=2/100 | departures=2 | FEL: SERVER_DONE@0.288(S2) CENTRAL_DONE@0.297 ARRIVAL@0.350 WAKE@0.476(S3)[RED] WAKE@0.790(S1)[RED]
+10 | clock=  0.2881 |  SERVER_DONE | S2 completed customer and went on vacation | CQ=0 C=BUSY | Status: S1=V S2=V S3=V S4=I S5=I | pool=1/100 | departures=3 | FEL: CENTRAL_DONE@0.297 ARRIVAL@0.350 WAKE@0.414(S2)[RED] WAKE@0.476(S3)[RED] WAKE@0.790(S1)[RED]
+11 | clock=  0.2968 | CENTRAL_DONE | central sent customer to free server S4 | customer 3 | CQ=0 C=IDLE | Status: S1=V S2=V S3=V S4=B S5=I | pool=1/100 | departures=3 | FEL: ARRIVAL@0.350 SERVER_DONE@0.384(S4) WAKE@0.414(S2)[RED] WAKE@0.476(S3)[RED] WAKE@0.790(S1)[RED]
+12 | clock=  0.3504 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=V S2=V S3=V S4=B S5=I | pool=2/100 | departures=3 | FEL: SERVER_DONE@0.384(S4) WAKE@0.414(S2)[RED] ARRIVAL@0.459 CENTRAL_DONE@0.467 WAKE@0.476(S3)[RED]
+13 | clock=  0.3844 |  SERVER_DONE | S4 completed customer and went on vacation | CQ=0 C=BUSY | Status: S1=V S2=V S3=V S4=V S5=I | pool=1/100 | departures=4 | FEL: WAKE@0.414(S2)[RED] ARRIVAL@0.459 CENTRAL_DONE@0.467 WAKE@0.476(S3)[RED] WAKE@0.678(S4)[RED]
+14 | clock=  0.4141 |         WAKE | S2 vacation ended and server is idle | CQ=0 C=BUSY | Status: S1=V S2=I S3=V S4=V S5=I | pool=1/100 | departures=4 | FEL: ARRIVAL@0.459 CENTRAL_DONE@0.467 WAKE@0.476(S3)[RED] WAKE@0.678(S4)[RED] WAKE@0.790(S1)[RED]
+15 | clock=  0.4589 |      ARRIVAL | customer joined central queue | CQ=1 C=BUSY | Status: S1=V S2=I S3=V S4=V S5=I | pool=2/100 | departures=4 | FEL: CENTRAL_DONE@0.467 WAKE@0.476(S3)[RED] ARRIVAL@0.517 WAKE@0.678(S4)[RED] WAKE@0.790(S1)[RED]
+16 | clock=  0.4670 | CENTRAL_DONE | central sent customer to free server S2 | customer 4 | CQ=0 C=BUSY | Status: S1=V S2=B S3=V S4=V S5=I | pool=2/100 | departures=4 | FEL: WAKE@0.476(S3)[RED] SERVER_DONE@0.490(S2) CENTRAL_DONE@0.512 ARRIVAL@0.517 WAKE@0.678(S4)[RED]
+17 | clock=  0.4762 |         WAKE | S3 vacation ended and server is idle | CQ=0 C=BUSY | Status: S1=V S2=B S3=I S4=V S5=I | pool=2/100 | departures=4 | FEL: SERVER_DONE@0.490(S2) CENTRAL_DONE@0.512 ARRIVAL@0.517 WAKE@0.678(S4)[RED] WAKE@0.790(S1)[RED]
+18 | clock=  0.4902 |  SERVER_DONE | S2 completed customer and went on vacation | CQ=0 C=BUSY | Status: S1=V S2=V S3=I S4=V S5=I | pool=1/100 | departures=5 | FEL: CENTRAL_DONE@0.512 ARRIVAL@0.517 WAKE@0.678(S4)[RED] WAKE@0.790(S1)[RED] WAKE@0.980(S2)[RED]
+19 | clock=  0.5121 | CENTRAL_DONE | central sent customer to free server S3 | customer 5 | CQ=0 C=IDLE | Status: S1=V S2=V S3=B S4=V S5=I | pool=1/100 | departures=5 | FEL: ARRIVAL@0.517 SERVER_DONE@0.586(S3) WAKE@0.678(S4)[RED] WAKE@0.790(S1)[RED] WAKE@0.980(S2)[RED]
+20 | clock=  0.5173 |      ARRIVAL | customer joined central queue | CQ=0 C=BUSY | Status: S1=V S2=V S3=B S4=V S5=I | pool=2/100 | departures=5 | FEL: SERVER_DONE@0.586(S3) ARRIVAL@0.653 WAKE@0.678(S4)[RED] CENTRAL_DONE@0.737 WAKE@0.790(S1)[RED]
+------------------------------------------------------------
+Completed departures: 10000
+Lost/disappeared arrivals: 150
+Average time in system: 0.521
+Variance of time in system: 0.188
+Maximum pool objects used: 23/100
+Pool exhaustions: 0
+
+
+=== Code Execution Successful ===
